@@ -1,6 +1,6 @@
 --- a/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
 +++ b/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
-@@ -64,22 +64,14 @@ platform_do_upgrade() {
+@@ -64,21 +64,13 @@ platform_do_upgrade() {
  	local board=$(board_name)
  
  	case "$board" in
@@ -10,7 +10,6 @@
  	bananapi,bpi-r4|\
  	bananapi,bpi-r4-poe|\
 -	cmcc,rax3000m|\
- 	gatonetworks,gdsp|\
 -	h3c,magic-nx30-pro|\
 -	jcg,q30-pro|\
 -	jdcloud,re-cp-03|\
@@ -20,9 +19,9 @@
  	openwrt,one|\
 -	netcore,n60|\
 -	qihoo,360t7|\
- 	routerich,ax3000-ubootmod|\
  	tplink,tl-xdr4288|\
  	tplink,tl-xdr6086|\
+ 	tplink,tl-xdr6088|\
 @@ -149,7 +141,6 @@ platform_do_upgrade() {
  			;;
  		esac
@@ -31,3 +30,4 @@
  	xiaomi,mi-router-wr30u-stock|\
  	xiaomi,redmi-router-ax6000-stock)
  		CI_KERN_UBIPART=ubi_kernel
+
