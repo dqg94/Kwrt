@@ -1,0 +1,51 @@
+--- a/target/linux/mediatek/image/filogic.mk
++++ b/target/linux/mediatek/image/filogic.mk
+@@ -433,6 +433,22 @@ define Device/xiaomi_mi-router-ax3000t
+ endef
+ TARGET_DEVICES += xiaomi_mi-router-ax3000t
+ 
++define Device/xiaomi_mi-router-ax3000t-an8855
++  DEVICE_VENDOR := Xiaomi
++  DEVICE_MODEL := Mi Router AX3000T with AN8855
++  DEVICE_DTS := mt7981b-xiaomi-mi-router-ax3000t-an8855
++  DEVICE_DTS_DIR := ../dts
++  UBINIZE_OPTS := -E 5
++  BLOCKSIZE := 128k
++  PAGESIZE := 2048
++  IMAGE_SIZE := 114688k
++  KERNEL_IN_UBI := 1
++  IMAGES += factory.bin
++  IMAGE/factory.bin := append-ubi | check-size $$$$(IMAGE_SIZE)
++  IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
++endef
++TARGET_DEVICES += xiaomi_mi-router-ax3000t-an8855
++
+ define Device/glinet_gl-mt3000
+   DEVICE_VENDOR := GL.iNet
+   DEVICE_MODEL := GL-MT3000
+
+--- a/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
++++ b/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
+@@ -23,12 +23,19 @@ mediatek_setup_interfaces()
+ 		ucidef_add_switch "switch0" \
+ 			"1:lan" "2:lan" "3:lan" "0:wan" "6u@eth0" "5u@eth1"
+ 		;;
++	xiaomi,mi-router-ax3000t-an8855)
++		ucidef_set_interfaces_lan_wan "eth0.1" "eth0.2"
++		ucidef_add_switch "switch0" \
++			"1:lan" "2:lan" "3:lan" "0:wan" "5t@eth0"
++		;;
+ 	*360,t7*)
+ 		ucidef_set_interfaces_lan_wan "eth0" "eth1"
+ 		ucidef_add_switch "switch0" \
+
+--- a/target/linux/mediatek/mt7981/base-files/lib/upgrade/platform.sh
++++ b/target/linux/mediatek/mt7981/base-files/lib/upgrade/platform.sh
+@@ -189,6 +190,7 @@ platform_do_upgrade() {
+ 	case "$board" in
+ 	xiaomi,mi-router-wr30u-112m|\
+ 	xiaomi,mi-router-ax3000t|\
++	xiaomi,mi-router-ax3000t-an8855|\
+ 	*mt3000* |\
+ 	glinet,x3000-emmc |\
+ 	*xe3000* |\
