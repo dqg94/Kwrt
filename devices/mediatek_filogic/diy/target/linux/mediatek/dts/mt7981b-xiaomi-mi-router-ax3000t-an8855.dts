@@ -6,12 +6,13 @@
 / { 
 	model = "Xiaomi Mi Router AX3000T with AN8855";
 	compatible = "xiaomi,mi-router-ax3000t-an8855", "mediatek,mt7981";
-};
-
-gsw_an8855: gsw@1 {
+	
+	gsw_an8855: gsw@1 {
 	compatible = "airoha,an8855";
 	#address-cells = <1>;
 	#size-cells = <0>;
 	status = "okay";
+	};
 };
+
 
